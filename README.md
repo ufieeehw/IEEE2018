@@ -27,3 +27,5 @@ The install script is intended to handle *every single thing* that needs to be i
 
 The script will create all of the files and directories it needs within the selected catkin workspace. If the script has previously been run, it will not run initial set up tasks that have already been performed unless they need to be updated. This means that the script will respect workspaces with git repositories already present in them.
 
+# 2017 Robot
+[fire](lastyear.jpg)
