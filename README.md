@@ -2,7 +2,7 @@
 
 Email Quade Kirby at qkirby@ufl.edu if you are interested in helping out or if you want information about the project.
 
-The [competition rules](Not Available yet) contain all of the information that will be needed to design and build our robot.
+The [competition rules](Rules.pdf) contain all of the information that will be needed to design and build our robot.
 
 The software for this project is heavily based on the software from the [previous year's software](https://github.com/ufieeehw/IEEE2017) due to the fact that the mechanical and electrical platforms were very similar. Important files from last year were [merged](https://stackoverflow.com/questions/19954485/extract-multiple-directories-using-git-filter-branch) into this repository and then modified to work with the new parts of the platform. See the [final pull request](https://github.com/ufieeehw/IEEE2017/pull/3) for a breakdown of what worked and what did not.
 
