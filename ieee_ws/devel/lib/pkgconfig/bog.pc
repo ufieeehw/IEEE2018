@@ -1,8 +1,0 @@
-prefix=/home/orangehoopla/Desktop/IEEE2018/ieee_ws/devel
-
-Name: bog
-Description: Description of bog
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/orangehoopla/Desktop/IEEE2018/ieee_ws/devel/lib 
-Requires: 

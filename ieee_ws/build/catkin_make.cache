@@ -1,2 +1,0 @@
-bog
--DCATKIN_DEVEL_PREFIX=/home/orangehoopla/Desktop/IEEE2018/ieee_ws/devel -DCMAKE_INSTALL_PREFIX=/home/orangehoopla/Desktop/IEEE2018/ieee_ws/install -G Unix Makefiles
