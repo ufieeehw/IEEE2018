@@ -466,3 +466,4 @@ unsigned char DualVNH5019MotorShield::getM4Fault()
   return !digitalRead(_M4EN);
 }
 
+
