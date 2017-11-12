@@ -1,0 +1,20 @@
+<launch>
+
+  <node name="left_wheel_pid" pkg="pid" type="controller" output="screen" >
+      <param name="Kp" value="3" />
+      <param name="Ki" value="0" />
+      <param name="Kd" value="0" />
+      <param name="upper_limit" value="520" />
+      <param name="lower_limit" value="-520" />
+      <param name="windup_limit" value="50" />
+      <param name="cutoff_frequency" value="5" />
+      <param name="max_loop_frequency" value="105.0" />
+      <param name="min_loop_frequency" value="95.0" />
+     </node>
+
+  
+  
+<node pkg="rosserial_python" type="serial_node.py" name="serial_node" args="/dev/ttyACM0"/>
+<node pkg="bog" type="pid_to_wheel.py" name="flag" />
+
+</launch>
