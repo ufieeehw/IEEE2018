@@ -85,6 +85,8 @@ void setup(){
   nh.subscribe(sub);
   nh.advertise(chatter);
 
+  pinMode(30, INPUT_PULLUP);
+
   
 //  nh.subscribe(sub2);
   
@@ -95,15 +97,15 @@ void loop(){
   nh.spinOnce();
   str_msg.wheel1 = count;
   str_msg.wheel2 = count2;
-  str_msg.wheel3 = 20;
-  str_msg.wheel4 = 20;
-  chatter.publish( &str_msg );
+  str_msg.wheel3 = millis();
+  str_msg.wheel4 = lastRefreshTime;
+  //chatter.publish( &str_msg );
 
-  if(digitalRead(A3) == 0)
+  if(digitalRead(30) == 0)
   {
     toggle1 = 0;
   }
-  else if(digitalRead(A3) == 1 && toggle1 == 0)
+  else if(digitalRead(30) == 1 && toggle1 == 0)
   {
     toggle1 = 1;
     count++;
@@ -120,19 +122,17 @@ void loop(){
   }
 
  
-  if(millis() - lastRefreshTime >= 20)
+  if(millis() - lastRefreshTime >= 50)
   {
-    lastRefreshTime += 20;
+    lastRefreshTime += 50;
     chatter.publish( &str_msg );
     count = 0;
     count2 = 0;
+    //chatter.publish( &str_msg );
   }
 
   
   
 }
 
-void blink() {
-  count++;
-}
 
