@@ -105,12 +105,7 @@ void DualVNH5019MotorShield::init()
   //
   // PWM frequency calculation
   // 16MHz / 1 (prescaler) / 2 (phase-correct) / PWM_MAX (top) = 20kHz
-  TCCR1A = 0b101000000;
-  TCCR1B = 0b000100001;
-  TCCR3A = 0b101000000;
-  TCCR3B = 0b000100001;
-  ICR1 = PWM_MAX;
-  ICR3 = PWM_MAX;
+
   #endif
 
 }
@@ -230,7 +225,7 @@ void DualVNH5019MotorShield::setM3Speed(int speed)
     speed = PWM_MAX; // Max PWM dutycycle
 
   #if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega32U4__)
-    OCR3A = speed;
+    int OCR3A = speed;
   #else  
     //Default to using analogWrite(), mapping PWM_MAX to 255
     analogWrite(_PWM3,speed * 255 / PWM_MAX); 
@@ -278,7 +273,7 @@ void DualVNH5019MotorShield::setM4Speed(int speed)
     speed = PWM_MAX; // Max PWM dutycycle
 
   #if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega32U4__)
-    OCR3B = speed;
+    int OCR3B = speed;
   #else  
     //Default to using analogWrite(), mapping PWM_MAX to 255
     analogWrite(_PWM4,speed * 255 / PWM_MAX); 
@@ -379,7 +374,7 @@ void DualVNH5019MotorShield::setM3Brake(int brake)
   digitalWrite(_M3INB, LOW);
 
   #if defined(__AVR_ATmega168__)|| defined(__AVR_ATmega328P__) || defined(__AVR_ATmega32U4__)
-    OCR3A = brake;
+    int OCR3A = brake;
   #else
     // Default to using analogWrite(), mapping PWM_MAX to 255
     analogWrite(_PWM3,brake * 255 / PWM_MAX);
@@ -402,7 +397,7 @@ void DualVNH5019MotorShield::setM4Brake(int brake)
   digitalWrite(_M4INB, LOW);
 
   #if defined(__AVR_ATmega168__)|| defined(__AVR_ATmega328P__) || defined(__AVR_ATmega32U4__)
-    OCR3B = brake;
+    int OCR3B = brake;
   #else
     // Default to using analogWrite(), mapping PWM_MAX to 255
     analogWrite(_PWM4,brake * 255 / PWM_MAX); 
