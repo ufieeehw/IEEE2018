@@ -1,0 +1,67 @@
+#!/usr/bin/env python
+
+import rospy
+from chat_room.msg import SetWheelSpeeds
+from std_msgs.msg import Int64
+
+class Main:
+
+	def __init__(self):
+		rospy.init_node('State_Machine', anonymous=False)
+		rospy.Subscriber('IR', Int64, self.IR)
+		self.state = True
+
+		self.central()
+
+
+
+
+	#main loop function
+	def central(self):
+
+		#holds here until we recieve the first IR instruction
+		while(self.state):
+			pass
+
+		stepA = self.instruction/100
+
+		stepB = (self.instruction/10)%10
+
+		stepC = self.instruction%10
+
+		#first stage
+		if(A):
+			pass
+		else:
+			pass
+
+		if(B):
+			pass
+		else:
+			pass
+
+		if(C):
+			pass
+		else:
+			pass
+
+
+
+
+		
+		rospy.spin()
+
+
+	#function for when we get the three digit info back
+	def IR(self,data):
+		#
+		self.instruction = data.data
+		self.state = False
+		#print(self.instruction)
+
+
+
+if __name__ == "__main__":
+    start = Main()
+    
+
