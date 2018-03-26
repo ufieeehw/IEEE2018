@@ -2,6 +2,7 @@
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32
+from bog.msg import SetWheelSpeeds
 
 #constants
 DISTANCE_RATIO = 0.25 #this constant will be used to determine how much to move the robot left or right. The farther away we are, the less we want to move left or right. 
@@ -12,12 +13,13 @@ GOAL_DISTANCE_HIGH = 11 # the upper bound of the goal distance from the button
 #state variables
 current_direction = ""
 current_distance = -1 
-updated = False
+
 
 #move method will move the robot left, right, or forward depending on the distance and direction passed to it.
 #we will move toward the button until certain parameters are met
 def move(direction, distance): 
-
+    if current_distance < GOAL_DISTANCE_LOW:
+        rospy.loginfo("test")
 
 
 def distance_callback(data):
@@ -31,6 +33,7 @@ def direction_callback(data):
     updated = True
 
 def listen():
+    updated = False
     rospy.init_node('vision_subscriber', anonymous=True)
     rospy.Subscriber('direction', String, direction_callback)
     rospy.Subscriber('distance', Float32, distance_callback)
