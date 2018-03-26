@@ -13,14 +13,9 @@ def direction_callback(data):
 def listen():
     rospy.init_node('vision_subscriber', anonymous=True)
     rospy.Subscriber('direction', String, direction_callback)
-    rospy.Subcriber('distance', Float32, distance_callback)
+    rospy.Subscriber('distance', Float32, distance_callback)
 
 
+    rospy.spin()
 if __name__ == '__main__':
-    try:
-        listen()
-
-
-
-    except rospy.ROSInterruptException:
-        pass
+    listen()
