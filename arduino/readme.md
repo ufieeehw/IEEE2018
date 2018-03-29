@@ -21,7 +21,6 @@ _M2EN = 23
 _CS2 = A1
 _PWM1 = 2
 _PWM2 = 3
-
 ```
 
  * Motor Sheild 2
@@ -37,7 +36,6 @@ _M4EN  = 25
 _CS4 = A3
 _PWM3 = 4
 _PWM4 = 5
-
 ```
  * Encoded Motors
  ![Motor Example](motor_pinout.png)
@@ -48,6 +46,7 @@ Wheel 1 = 30
 Wheel 2 = A4
 Wheel 3 = NOT DECIDED
 Wheel 4 = NOT DECIDED
+```
 
 * Arduino Mega
 
