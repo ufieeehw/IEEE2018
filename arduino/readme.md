@@ -9,7 +9,6 @@ So as of now we had to edit some of the motor control libraries so the PID can r
 * Arduino Due
 
   * Motor Sheild 1
-
 	```
 	_M1INA = 52
 	_M1INB = 53
@@ -22,8 +21,7 @@ So as of now we had to edit some of the motor control libraries so the PID can r
 	_PWM1 = 2
 	_PWM2 = 3
 	```
- * Motor Sheild 2
-
+  * Motor Sheild 2
 	```
 	_M3INA = 48
 	_M3INB = 49
@@ -36,16 +34,15 @@ So as of now we had to edit some of the motor control libraries so the PID can r
 	_PWM3 = 4
 	_PWM4 = 5
 	```
- * Encoded Motors
- ![Motor Example](motor_pinout.png)
+  * Encoded Motors
+  ![Motor Example](motor_pinout.png)
 
-
-```
-Wheel 1 = 30
-Wheel 2 = A4
-Wheel 3 = NOT DECIDED
-Wheel 4 = NOT DECIDED
-```
+	```
+	Wheel 1 = 30
+	Wheel 2 = A4
+	Wheel 3 = NOT DECIDED
+	Wheel 4 = NOT DECIDED
+	```
 
 * Arduino Mega
 
