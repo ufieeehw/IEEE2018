@@ -36,7 +36,7 @@ static unsigned long lastRefreshTime = 0;
 
 DualVNH5019MotorShield md;
 
-void M1( chat_room::SetWheelSpeeds cmd_msg) {
+void M1( bog::SetWheelSpeeds cmd_msg) {
   md.setM1Speed(cmd_msg.wheel3);
   md.setM2Speed(-cmd_msg.wheel4);
   md.setM3Speed(-cmd_msg.wheel1);
@@ -46,7 +46,7 @@ void M1( chat_room::SetWheelSpeeds cmd_msg) {
     //toggle led  
 }
 
-void M2( chat_room::SetWheelSpeeds cmd_msg) {
+void M2( bog::SetWheelSpeeds cmd_msg) {
   md.setM1Speed(cmd_msg.wheel3);
   md.setM2Speed(-cmd_msg.wheel4);
   md.setM3Speed(-cmd_msg.wheel1);
@@ -81,11 +81,11 @@ void stopIfFault()
   }
 }
 
-typedef  void (*SetWheelSpeeds)  ( const chat_room::SetWheelSpeeds&);
+typedef  void (*SetWheelSpeeds)  ( const bog::SetWheelSpeeds&);
 
-ros::Subscriber< chat_room::SetWheelSpeeds> sub("Set_Motors",(SetWheelSpeeds)M1); 
+ros::Subscriber< bog::SetWheelSpeeds> sub("Set_Motors",(SetWheelSpeeds)M1); 
 
-chat_room::SetWheelSpeeds str_msg;
+bog::SetWheelSpeeds str_msg;
 ros::Publisher chatter("Wheel_feedback", &str_msg);
 
 //ros::Subscriber<std_msgs::UInt16> sub("servo", M1);
