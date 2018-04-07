@@ -63,9 +63,8 @@ String IMU_data()
   // - VECTOR_GRAVITY       - m/s^2
   imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
   angle = atan2(euler.y(),euler.x());
-  
   /* Display the floating point data */
-  
-  data = "angle[ " + String(angle) + "] z[ " + String(euler.z() + "]");
+ data = "angle[ " + String(angle) + "] z[ " + String(euler.z()) + "]";
+
   return data;
 }
