@@ -31,6 +31,7 @@ void setup(void){
   Serial.begin(9600);
 
   /* Initialise the sensor */
+  
   if(!bno.begin())
   {
     /* There was a problem detecting the BNO055 ... check your connections */
@@ -64,5 +65,6 @@ String IMU_data()
   angle = atan2(euler.y(),euler.x());
   /* Display the floating point data */
  data = "angle[ " + String(angle) + "] z[ " + String(euler.z()) + "]";
+
   return data;
 }
