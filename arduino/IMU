@@ -22,7 +22,7 @@
 
 Adafruit_BNO055 bno = Adafruit_BNO055();
 
-/*
+
 void setup(void){
    while(!Serial.available()){
       #define BNO055_SAMPLERATE_DELAY_MS (Serial.read())
@@ -31,6 +31,7 @@ void setup(void){
   Serial.begin(9600);
 
   /* Initialise the sensor */
+  
   if(!bno.begin())
   {
     /* There was a problem detecting the BNO055 ... check your connections */
@@ -47,7 +48,7 @@ void setup(void){
 void loop(){
   Serial.println(IMU_data());
 }
-*/
+
 
 String IMU_data()
 {
@@ -61,8 +62,10 @@ String IMU_data()
   // - VECTOR_LINEARACCEL   - m/s^2
   // - VECTOR_GRAVITY       - m/s^2
   imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-  angle = atan2(euler.y(),euler.x())
+  angle = atan2(euler.y(),euler.x());
+  
   /* Display the floating point data */
+  
   data = "angle[ " + String(angle) + "] z[ " + String(euler.z() + "]");
   return data;
 }
