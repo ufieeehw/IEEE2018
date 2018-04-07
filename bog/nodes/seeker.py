@@ -7,7 +7,7 @@ from std_msgs.msg import String
 from std_msgs.msg import Float32
 
 CASCADE_PATH  = "/home/uf-ieee/Documents/ws/src/IEEE2018/bog/nodes/cascade_19.xml" #absolute path to the cascade
-DEBUG_DISPLAY = 0 # if true, shows the camera and its interpretations on the picture
+DEBUG_DISPLAY = 1 # if true, shows the camera and its interpretations on the picture
 
 def vision():
     direct = rospy.Publisher('direction', String, queue_size=10) #handles the publishing of the direction of the button
@@ -33,7 +33,7 @@ def vision():
         # add this
         # image, reject levels level weights.
         #buttons = button_cascade.detectMultiScale(gray, scaleFactor=2 ,minNeighbors=30)
-        buttons = button_cascade.detectMultiScale(gray, scaleFactor=1.2 ,minNeighbors=30) # adjusts how sensitive the cascade is to saying that there is a button in the frame
+        buttons = button_cascade.detectMultiScale(gray, scaleFactor=1.1 ,minNeighbors=30) # adjusts how sensitive the cascade is to saying that there is a button in the frame
         
         # add this
         for (x,y,w,h) in buttons:

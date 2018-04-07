@@ -9,7 +9,7 @@ from bog.msg import SetWheelSpeeds
 DISTANCE_RATIO = 0.25 #this constant will be used to determine how much to move the robot left or right. The farther away we are, the less we want to move left or right. 
 GOAL_DISTANCE_LOW = 5 # the lower bound of the goal distance from the button
 GOAL_DISTANCE_HIGH = 11 # the upper bound of the goal distance from the button
-WHEEL_SPEED = 75
+WHEEL_SPEED = 50
 
 #state variables
 current_direction = ""
@@ -32,12 +32,59 @@ def forward():
     wheels.wheel3 = WHEEL_SPEED
     wheels.wheel4 = WHEEL_SPEED
     pub.publish(wheels)
-    time.sleep(2)
+    time.sleep(0.5)
     wheels.wheel1 = 0
     wheels.wheel2 = 0
     wheels.wheel3 = 0
     wheels.wheel4 = 0
     pub.publish(wheels)
+    time.sleep(0.5)
+
+def backward():
+    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+    wheels.wheel1 = -1*WHEEL_SPEED
+    wheels.wheel2 = -1*WHEEL_SPEED
+    wheels.wheel3 = -1*WHEEL_SPEED
+    wheels.wheel4 = -1*WHEEL_SPEED
+    pub.publish(wheels)
+    time.sleep(0.5)
+    wheels.wheel1 = 0
+    wheels.wheel2 = 0
+    wheels.wheel3 = 0
+    wheels.wheel4 = 0
+    pub.publish(wheels)
+    time.sleep(0.5)
+
+
+def left():
+    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+    wheels.wheel1 = 1*WHEEL_SPEED
+    wheels.wheel2 = -1*WHEEL_SPEED
+    wheels.wheel3 = 1*WHEEL_SPEED
+    wheels.wheel4 = -1*WHEEL_SPEED
+    pub.publish(wheels)
+    time.sleep(0.5)
+    wheels.wheel1 = 0
+    wheels.wheel2 = 0
+    wheels.wheel3 = 0
+    wheels.wheel4 = 0
+    pub.publish(wheels)
+    time.sleep(0.5)
+
+def right():
+    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+    wheels.wheel1 = -1*WHEEL_SPEED
+    wheels.wheel2 = 1*WHEEL_SPEED
+    wheels.wheel3 = -1*WHEEL_SPEED
+    wheels.wheel4 = 1*WHEEL_SPEED
+    pub.publish(wheels)
+    time.sleep(0.5)
+    wheels.wheel1 = 0
+    wheels.wheel2 = 0
+    wheels.wheel3 = 0
+    wheels.wheel4 = 0
+    pub.publish(wheels)
+    time.sleep(0.5)
 
 
 
@@ -47,8 +94,15 @@ def move(direction, distance):
     rospy.loginfo("Direction: %s", current_direction) # write the information to the console
     rospy.loginfo("Distance: %s", current_distance) # write the information to the console
 
-    if current_distance > GOAL_DISTANCE_LOW: #move forward
+    if direction == "left":
+        left()
+    elif direction == "right":
+        right()
+    elif current_distance > GOAL_DISTANCE_LOW: #move forward
         forward()
+    elif current_distance > GOAL_DISTANCE_HIGH:
+        backward()
+
 
 
     
