@@ -6,8 +6,8 @@ import math
 from std_msgs.msg import String
 from std_msgs.msg import Float32
 
-CASCADE_PATH  = "/home/kaden/Documents/button/src/buttonseek/src/cascade_19.xml" #absolute path to the cascade
-DEBUG_DISPLAY = 0 # if true, shows the camera and its interpretations on the picture
+CASCADE_PATH  = "/home/uf-ieee/Documents/ws/src/IEEE2018/bog/nodes/cascade_19.xml" #absolute path to the cascade
+DEBUG_DISPLAY = 1 # if true, shows the camera and its interpretations on the picture
 
 def vision():
     direct = rospy.Publisher('direction', String, queue_size=10) #handles the publishing of the direction of the button
@@ -17,7 +17,7 @@ def vision():
 
     button_cascade = cv2.CascadeClassifier(CASCADE_PATH) # uses the haar cascade in the path to find the button
 
-    cap = cv2.VideoCapture(1) # cap is the image that the camera captured
+    cap = cv2.VideoCapture(0) # cap is the image that the camera captured
 
 
     while not rospy.is_shutdown():
@@ -33,7 +33,7 @@ def vision():
         # add this
         # image, reject levels level weights.
         #buttons = button_cascade.detectMultiScale(gray, scaleFactor=2 ,minNeighbors=30)
-        buttons = button_cascade.detectMultiScale(gray, scaleFactor=1.2 ,minNeighbors=30) # adjusts how sensitive the cascade is to saying that there is a button in the frame
+        buttons = button_cascade.detectMultiScale(gray, scaleFactor=1.1 ,minNeighbors=30) # adjusts how sensitive the cascade is to saying that there is a button in the frame
         
         # add this
         for (x,y,w,h) in buttons:
