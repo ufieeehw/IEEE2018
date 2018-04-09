@@ -6,7 +6,7 @@
 
 #include <ros.h>
 #include <std_msgs/UInt16.h>
-#include <chat_room/SetWheelSpeeds.h>
+#include <bog/SetWheelSpeeds.h>
 
 #include "DualVNH5019MotorShield.h"
 
@@ -20,26 +20,37 @@ int toggle1 = 0;
 int count2 = 0;
 int toggle2 = 0;
 
+int count3 = 0;
+int toggle3= 0;
+
+int count4 = 0;
+int toggle4 = 0;
+
+int MOTOR1 = 32;
+int MOTOR2 = 30;
+int MOTOR3 = 28;
+int MOTOR4 = 26;
+
 static unsigned long lastRefreshTime = 0;
 
 
 DualVNH5019MotorShield md;
 
-void M1( chat_room::SetWheelSpeeds cmd_msg) {
-  md.setM1Speed(cmd_msg.wheel1);
-  md.setM2Speed(cmd_msg.wheel2);
-  md.setM3Speed(cmd_msg.wheel3);
-  md.setM4Speed(cmd_msg.wheel4);//set servo angle, should be from 0-180  
+void M1( bog::SetWheelSpeeds cmd_msg) {
+  md.setM1Speed(cmd_msg.wheel3);
+  md.setM2Speed(-cmd_msg.wheel4);
+  md.setM3Speed(-cmd_msg.wheel1);
+  md.setM4Speed(cmd_msg.wheel2);//set servo angle, should be from 0-180  
   //stopIfFault();
   
     //toggle led  
 }
 
-void M2( chat_room::SetWheelSpeeds cmd_msg) {
-  md.setM1Speed(cmd_msg.wheel1);
-  md.setM2Speed(cmd_msg.wheel2);
-  md.setM3Speed(cmd_msg.wheel3);
-  md.setM4Speed(cmd_msg.wheel4);//set servo angle, should be from 0-180  
+void M2( bog::SetWheelSpeeds cmd_msg) {
+  md.setM1Speed(cmd_msg.wheel3);
+  md.setM2Speed(-cmd_msg.wheel4);
+  md.setM3Speed(-cmd_msg.wheel1);
+  md.setM4Speed(cmd_msg.wheel2);//set servo angle, should be from 0-180  
   //stopIfFault();
   
     //toggle led  
@@ -70,11 +81,11 @@ void stopIfFault()
   }
 }
 
-typedef  void (*SetWheelSpeeds)  ( const chat_room::SetWheelSpeeds&);
+typedef  void (*SetWheelSpeeds)  ( const bog::SetWheelSpeeds&);
 
-ros::Subscriber< chat_room::SetWheelSpeeds> sub("Set_Motors",(SetWheelSpeeds)M1); 
+ros::Subscriber< bog::SetWheelSpeeds> sub("Set_Motors",(SetWheelSpeeds)M1); 
 
-chat_room::SetWheelSpeeds str_msg;
+bog::SetWheelSpeeds str_msg;
 ros::Publisher chatter("Wheel_feedback", &str_msg);
 
 //ros::Subscriber<std_msgs::UInt16> sub("servo", M1);
@@ -95,34 +106,63 @@ void setup(){
   md.init();
 }
 
+
 void loop(){
   nh.spinOnce();
   str_msg.wheel1 = count;
   str_msg.wheel2 = count2;
-  str_msg.wheel3 = millis();
-  str_msg.wheel4 = lastRefreshTime;
+  str_msg.wheel3 = count3;
+  str_msg.wheel4 = count4;
   //chatter.publish( &str_msg );
 
-  if(digitalRead(30) == 0)
+
+  if(digitalRead(MOTOR1) == 0)
   {
     toggle1 = 0;
   }
-  else if(digitalRead(30) == 1 && toggle1 == 0)
+  else if(digitalRead(MOTOR1) == 1 && toggle1 == 0)
 
   {
     toggle1 = 1;
     count++;
   }
 
-  if(digitalRead(A4) == 0)
+
+  
+
+  if(digitalRead(MOTOR2) == 0)
   {
     toggle2 = 0;
   }
-  else if(digitalRead(A4) == 1 && toggle2 == 0)
+  else if(digitalRead(MOTOR2) == 1 && toggle2 == 0)
   {
     toggle2 = 1;
     count2++;
   }
+  
+
+  if(digitalRead(MOTOR3) == 0)
+  {
+    toggle3 = 0;
+  }
+  else if(digitalRead(MOTOR3) == 1 && toggle3 == 0)
+  {
+    toggle3 = 1;
+    count3++;
+  } 
+
+
+  if(digitalRead(MOTOR4) == 0)
+  {
+    toggle4 = 0;
+  }
+  else if(digitalRead(MOTOR4) == 1 && toggle4 == 0)
+  {
+    toggle4 = 1;
+    count4++;
+  } 
+
+
 
  
 
@@ -132,6 +172,8 @@ void loop(){
     chatter.publish( &str_msg );
     count = 0;
     count2 = 0;
+    count3 = 0;
+    count4 = 0;
     //chatter.publish( &str_msg );
 
   }
