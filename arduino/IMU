@@ -1,5 +1,4 @@
 #include <Wire.h>
-#include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
 
@@ -7,8 +6,8 @@
 /* This driver reads raw data from the BNO055
    Connections
    ===========
-   Connect SCL to analog 5
-   Connect SDA to analog 4
+   Connect SCL to analog 5 or SCL(21) for MEGA
+   Connect SDA to analog 4 or SDA(20) for MEGA
    Connect VDD to 3.3V DC
    Connect GROUND to common ground
    History
@@ -23,12 +22,12 @@ Adafruit_BNO055 bno = Adafruit_BNO055();
 
 
 void setup(void){
-   while(!Serial.available()){
-      #define BNO055_SAMPLERATE_DELAY_MS (Serial.read())
-   }
+   
+ #define BNO055_SAMPLERATE_DELAY_MS (100) 
+ 
   //remove the above serial read after testing and timing diagram is established.
   Serial.begin(9600);
-  bno.setMode(00001000); % set the IMU to IMU mode as per datasheet pg.21
+  
   /* Initialise the sensor */
   
   if(!bno.begin())
@@ -37,11 +36,9 @@ void setup(void){
     Serial.println("ConnectionFail");
     while(1);
   }
-
-
-  bno.setExtCrystalUse(false);
-
-  Serial.println("Calibration status values: 0=uncalibrated, 3=fully calibrated");
+  
+  bno.setMode(B00001000); //set the IMU to IMU mode as per datasheet pg.21
+  bno.setExtCrystalUse(false); //set the BNO055 to use internal crystal if false.
 
 }
 void loop(){
@@ -59,7 +56,7 @@ String IMU_data()
   // - VECTOR_EULER         - degrees
   // - VECTOR_LINEARACCEL   - m/s^2
   // - VECTOR_GRAVITY       - m/s^2
-  imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER); %collects data from IMU registers.
+  imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER); //collects data from IMU registers.
   /* Display the floating point data */
  data = "horizontal[ " + String(euler.x()) + "] vertical[ " + String(euler.z()) + "]"; //creates formatted output of IMU data.
   return data;
