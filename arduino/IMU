@@ -2,7 +2,6 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
-#include <math.h>
 
  
 /* This driver reads raw data from the BNO055
@@ -29,7 +28,7 @@ void setup(void){
    }
   //remove the above serial read after testing and timing diagram is established.
   Serial.begin(9600);
-
+  bno.setMode(00001000); % set the IMU to IMU mode as per datasheet pg.21
   /* Initialise the sensor */
   
   if(!bno.begin())
@@ -53,7 +52,6 @@ void loop(){
 String IMU_data()
 {
  String data;
- double angle;
   // Possible vector values can be:
   // - VECTOR_ACCELEROMETER - m/s^2
   // - VECTOR_MAGNETOMETER  - uT
@@ -61,10 +59,8 @@ String IMU_data()
   // - VECTOR_EULER         - degrees
   // - VECTOR_LINEARACCEL   - m/s^2
   // - VECTOR_GRAVITY       - m/s^2
-  imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-  angle = atan2(euler.y(),euler.x());
+  imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER); %collects data from IMU registers.
   /* Display the floating point data */
- data = "angle[ " + String(angle) + "] z[ " + String(euler.z()) + "]";
-
+ data = "horizontal[ " + String(euler.x()) + "] vertical[ " + String(euler.z()) + "]"; %creates formatted output of IMU data.
   return data;
 }
