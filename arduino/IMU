@@ -61,6 +61,6 @@ String IMU_data()
   // - VECTOR_GRAVITY       - m/s^2
   imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER); %collects data from IMU registers.
   /* Display the floating point data */
- data = "horizontal[ " + String(euler.x()) + "] vertical[ " + String(euler.z()) + "]"; %creates formatted output of IMU data.
+ data = "horizontal[ " + String(euler.x()) + "] vertical[ " + String(euler.z()) + "]"; //creates formatted output of IMU data.
   return data;
 }
