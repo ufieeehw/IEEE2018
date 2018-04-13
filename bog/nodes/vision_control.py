@@ -9,7 +9,7 @@ from bog.msg import SetWheelSpeeds
 DISTANCE_RATIO = 0.25 #this constant will be used to determine how much to move the robot left or right. The farther away we are, the less we want to move left or right. 
 GOAL_DISTANCE_LOW = 5 # the lower bound of the goal distance from the button
 GOAL_DISTANCE_HIGH = 11 # the upper bound of the goal distance from the button
-WHEEL_SPEED = 50
+WHEEL_SPEED = 120
 
 #state variables
 current_direction = ""
@@ -26,11 +26,11 @@ class status:
 
 
 def forward():
-    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
-    wheels.wheel1 = WHEEL_SPEED
-    wheels.wheel2 = WHEEL_SPEED
-    wheels.wheel3 = WHEEL_SPEED
-    wheels.wheel4 = WHEEL_SPEED
+    pub = rospy.Publisher('VISION_Motors', SetWheelSpeeds, queue_size=10)
+    wheels.wheel1 = WHEEL_SPEED*0.75
+    wheels.wheel2 = WHEEL_SPEED*0.75
+    wheels.wheel3 = WHEEL_SPEED*0.75
+    wheels.wheel4 = WHEEL_SPEED*0.75
     pub.publish(wheels)
     time.sleep(0.5)
     wheels.wheel1 = 0
@@ -41,7 +41,7 @@ def forward():
     time.sleep(0.5)
 
 def backward():
-    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+    pub = rospy.Publisher('VISION_Motors', SetWheelSpeeds, queue_size=10)
     wheels.wheel1 = -1*WHEEL_SPEED
     wheels.wheel2 = -1*WHEEL_SPEED
     wheels.wheel3 = -1*WHEEL_SPEED
@@ -56,8 +56,8 @@ def backward():
     time.sleep(0.5)
 
 
-def left():
-    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+def right():
+    pub = rospy.Publisher('VISION_Motors', SetWheelSpeeds, queue_size=10)
     wheels.wheel1 = 1*WHEEL_SPEED
     wheels.wheel2 = -1*WHEEL_SPEED
     wheels.wheel3 = 1*WHEEL_SPEED
@@ -71,8 +71,8 @@ def left():
     pub.publish(wheels)
     time.sleep(0.5)
 
-def right():
-    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+def left():
+    pub = rospy.Publisher('VISION_Motors', SetWheelSpeeds, queue_size=10)
     wheels.wheel1 = -1*WHEEL_SPEED
     wheels.wheel2 = 1*WHEEL_SPEED
     wheels.wheel3 = -1*WHEEL_SPEED

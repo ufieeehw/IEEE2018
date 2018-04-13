@@ -24,7 +24,7 @@ class pid_relay:
         self.desired_distance = 0
 
 
-        self.pub_wheel = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+        self.pub_wheel = rospy.Publisher('PID_Motors', SetWheelSpeeds, queue_size=10)
         rospy.Subscriber('Wheel_Distance', SetWheelSpeeds, self.callback) # the change
 
         rospy.Subscriber('one/control_effort', Float64, self.set1)
@@ -57,14 +57,6 @@ class pid_relay:
         self.pub4.publish(int(data.wheel4))
 
 
-
-'''
-dear lord forgive me for this code
-Im sure in the future I'll pay 
-for these sins
-
-
-'''
     def set1(self,data):
         if data.data < 0:
             rospy.set_param('direction1', "")
