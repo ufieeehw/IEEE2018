@@ -58,4 +58,7 @@
  <node pkg="bog" type="dist_to_pid.py" name="flag" />
 <node pkg="bog" type="Wheel_linear_velocity.py" name="flagger" />
 <!--- pid_to_wheel.py   dist_to_pid.py-->
+<include file="$(find bog)/launch/MUX.launch"/>
+
+
 </launch>
