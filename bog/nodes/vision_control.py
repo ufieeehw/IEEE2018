@@ -12,6 +12,7 @@ GOAL_DISTANCE_HIGH = 11 # the upper bound of the goal distance from the button
 WHEEL_SPEED = 50
 TIMEOUT = 0.5
 
+
 #state variables
 current_direction = ""
 current_distance = -1 
@@ -27,11 +28,11 @@ class status:
 
 
 def forward():
-    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
-    wheels.wheel1 = WHEEL_SPEED
-    wheels.wheel2 = WHEEL_SPEED
-    wheels.wheel3 = WHEEL_SPEED
-    wheels.wheel4 = WHEEL_SPEED
+    pub = rospy.Publisher('VISION_Motors', SetWheelSpeeds, queue_size=10)
+    wheels.wheel1 = WHEEL_SPEED*0.75
+    wheels.wheel2 = WHEEL_SPEED*0.75
+    wheels.wheel3 = WHEEL_SPEED*0.75
+    wheels.wheel4 = WHEEL_SPEED*0.75
     pub.publish(wheels)
     time.sleep(TIMEOUT)
     wheels.wheel1 = 0
@@ -42,7 +43,7 @@ def forward():
     time.sleep(TIMEOUT)
 
 def backward():
-    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+    pub = rospy.Publisher('VISION_Motors', SetWheelSpeeds, queue_size=10)
     wheels.wheel1 = -1*WHEEL_SPEED
     wheels.wheel2 = -1*WHEEL_SPEED
     wheels.wheel3 = -1*WHEEL_SPEED
@@ -57,8 +58,8 @@ def backward():
     time.sleep(TIMEOUT)
 
 
-def left():
-    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+def right():
+    pub = rospy.Publisher('VISION_Motors', SetWheelSpeeds, queue_size=10)
     wheels.wheel1 = 1*WHEEL_SPEED
     wheels.wheel2 = -1*WHEEL_SPEED
     wheels.wheel3 = 1*WHEEL_SPEED
@@ -72,8 +73,8 @@ def left():
     pub.publish(wheels)
     time.sleep(TIMEOUT)
 
-def right():
-    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+def left():
+    pub = rospy.Publisher('VISION_Motors', SetWheelSpeeds, queue_size=10)
     wheels.wheel1 = -1*WHEEL_SPEED
     wheels.wheel2 = 1*WHEEL_SPEED
     wheels.wheel3 = -1*WHEEL_SPEED
