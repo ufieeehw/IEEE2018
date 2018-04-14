@@ -1,20 +1,65 @@
 <launch>
 
-  <node name="left_wheel_pid" pkg="pid" type="controller" output="screen" >
+  <node ns = 'one' name="left_wheel_pid" pkg="pid" type="controller" output="screen" >
       <param name="Kp" value="3" />
-      <param name="Ki" value="0" />
+      <param name="Ki" value="1" />
       <param name="Kd" value="0" />
-      <param name="upper_limit" value="520" />
-      <param name="lower_limit" value="-520" />
+      <param name="upper_limit" value="120" />
+      <param name="lower_limit" value="-120" />
       <param name="windup_limit" value="50" />
       <param name="cutoff_frequency" value="5" />
       <param name="max_loop_frequency" value="105.0" />
       <param name="min_loop_frequency" value="95.0" />
      </node>
 
+
+  <node ns = 'two' name="left_wheel_pid" pkg="pid" type="controller" output="screen" >
+      <param name="Kp" value="3" />
+      <param name="Ki" value="1" />
+      <param name="Kd" value="0" />
+      <param name="upper_limit" value="120" />
+      <param name="lower_limit" value="-120" />
+      <param name="windup_limit" value="50" />
+      <param name="cutoff_frequency" value="5" />
+      <param name="max_loop_frequency" value="105.0" />
+      <param name="min_loop_frequency" value="95.0" />
+     </node>
+
+
+
+  <node ns = 'three' name="left_wheel_pid" pkg="pid" type="controller" output="screen" >
+      <param name="Kp" value="3" />
+      <param name="Ki" value="1" />
+      <param name="Kd" value="0" />
+      <param name="upper_limit" value="120" />
+      <param name="lower_limit" value="-120" />
+      <param name="windup_limit" value="50" />
+      <param name="cutoff_frequency" value="5" />
+      <param name="max_loop_frequency" value="105.0" />
+      <param name="min_loop_frequency" value="95.0" />
+     </node>
+
+  <node ns = 'four' name="left_wheel_pid" pkg="pid" type="controller" output="screen" >
+      <param name="Kp" value="3" />
+      <param name="Ki" value="1" />
+      <param name="Kd" value="0" />
+      <param name="upper_limit" value="120" />
+      <param name="lower_limit" value="-120" />
+      <param name="windup_limit" value="50" />
+      <param name="cutoff_frequency" value="5" />
+      <param name="max_loop_frequency" value="105.0" />
+      <param name="min_loop_frequency" value="95.0" />
+     </node>
   
-  
-<node pkg="rosserial_python" type="serial_node.py" name="serial_node" args="/dev/ttyACM0"/>
-<node pkg="bog" type="pid_to_wheel.py" name="flag" />
+<node ns = 'Port_0' pkg="rosserial_python" type="serial_node.py" name="serial_node" args="/dev/ttyACM0"/>
+<node ns = 'Port_1' pkg="rosserial_python" type="serial_node.py" name="serial_node" args="/dev/ttyACM1"/>
+
+
+
+ <node pkg="bog" type="dist_to_pid.py" name="flag" />
+<node pkg="bog" type="Wheel_linear_velocity.py" name="flagger" />
+<!--- pid_to_wheel.py   dist_to_pid.py-->
+<include file="$(find bog)/launch/MUX.launch"/>
+
 
 </launch>

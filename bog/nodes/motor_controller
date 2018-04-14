@@ -37,7 +37,7 @@
 ## to the 'chatter' topic
 
 import rospy
-from chat_room.msg import SetWheelSpeeds
+from bog.msg import SetWheelSpeeds
 from sensor_msgs.msg import Joy
 
 def callback(data):
