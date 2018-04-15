@@ -7,8 +7,8 @@ from std_msgs.msg import String
 from std_msgs.msg import Float32
 
 
-CASCADE_PATH  = "/home/orangehoopla/ieee_ws/src/IEEE2018/bog/nodes/cascade_19.xml" #absolute path to the cascade
-DEBUG_DISPLAY = 0 # if true, shows the camera and its interpretations on the picture
+CASCADE_PATH  = "/home/kaden/Documents/ws/src/IEEE2018/bog/nodes/cascade_19.xml" #absolute path to the cascade
+DEBUG_DISPLAY = 1 # if true, shows the camera and its interpretations on the picture
 
 
 def vision():
@@ -19,7 +19,7 @@ def vision():
 
     button_cascade = cv2.CascadeClassifier(CASCADE_PATH) # uses the haar cascade in the path to find the button
 
-    cap = cv2.VideoCapture(0) # cap is the image that the camera captured
+    cap = cv2.VideoCapture(1) # cap is the image that the camera captured
 
 
     while not rospy.is_shutdown():
