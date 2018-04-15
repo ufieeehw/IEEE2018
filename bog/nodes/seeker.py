@@ -6,13 +6,10 @@ import math
 from std_msgs.msg import String
 from std_msgs.msg import Float32
 
-<<<<<<< HEAD
+
 CASCADE_PATH  = "/home/orangehoopla/ieee_ws/src/IEEE2018/bog/nodes/cascade_19.xml" #absolute path to the cascade
 DEBUG_DISPLAY = 0 # if true, shows the camera and its interpretations on the picture
-=======
-CASCADE_PATH  = "/home/uf-ieee/Documents/ws/src/IEEE2018/bog/nodes/cascade_19.xml" #absolute path to the cascade
-DEBUG_DISPLAY = 1 # if true, shows the camera and its interpretations on the picture
->>>>>>> 5d4aa712ecf4d85450903125aa9714acff7b1352
+
 
 def vision():
     direct = rospy.Publisher('direction', String, queue_size=10) #handles the publishing of the direction of the button
