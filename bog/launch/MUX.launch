@@ -1,6 +1,8 @@
 <launch>
 
-  <node name="MUX" pkg="topic_tools" type="mux" args="Port_1/Set_Motors PID_Motors IMU_Motors VISION_Motors">
+
+  <node name="MUX" pkg="topic_tools" type="mux" args="Port_1/Set_Motors IMU_Motors VISION_Motors PID_Motors">
+
       
      </node>
 
