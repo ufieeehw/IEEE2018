@@ -32,7 +32,7 @@ class wheel_velocity:
         self.end = time.time()
         self.pubD = rospy.Publisher('Wheel_Distance', SetWheelSpeeds, queue_size=10)
         self.pubV = rospy.Publisher('Wheel_velocity', SetWheelSpeeds, queue_size=10)
-        rospy.Subscriber('Wheel_feedback', SetWheelSpeeds, self.callback)
+        rospy.Subscriber('Port_1/Wheel_feedback', SetWheelSpeeds, self.callback)
         rospy.Subscriber('Distance_Reset', Bool, self.reset)
         while not rospy.is_shutdown():
             self.pubD.publish(self.hombre)
@@ -104,22 +104,33 @@ class wheel_velocity:
         msg = Float64()
         msg.data = 0
 
-
+        rospy.set_param('one/Front_left', '0')
         pub1 = rospy.Publisher('one/setpoint', Float64, queue_size=10)
-        self.wheel1_total = 0
         pub1.publish(msg)
+        self.wheel1_total = 0
+        rospy.set_param('one/Front_left', '1')
+        
 
+        rospy.set_param('two/Front_right', '0')
         pub2 = rospy.Publisher('two/setpoint', Float64, queue_size=10)
-        self.wheel2_total = 0
         pub2.publish(msg)
+        self.wheel2_total = 0
+        rospy.set_param('two/Front_right', '1')
+        
 
+        rospy.set_param('three/Back_right', '0')
         pub3 = rospy.Publisher('three/setpoint', Float64, queue_size=10)
-        self.wheel3_total = 0
         pub3.publish(msg)
+        self.wheel3_total = 0
+        rospy.set_param('three/Back_right', '1')
+        
 
+        rospy.set_param('four/Back_left', '0')
         pub4 = rospy.Publisher('four/setpoint', Float64, queue_size=10)
-        self.wheel4_total = 0
         pub4.publish(msg)
+        self.wheel4_total = 0
+        rospy.set_param('four/Back_left', '1')
+        
 
 
 

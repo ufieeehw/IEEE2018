@@ -1,6 +1,6 @@
 <launch>
 
-  <node ns = 'one' name="left_wheel_pid" pkg="pid" type="controller" output="screen" >
+  <node ns = 'one' name="Front_left" pkg="pid" type="controller" output="screen" >
       <param name="Kp" value="3" />
       <param name="Ki" value="1" />
       <param name="Kd" value="0" />
@@ -13,7 +13,7 @@
      </node>
 
 
-  <node ns = 'two' name="left_wheel_pid" pkg="pid" type="controller" output="screen" >
+  <node ns = 'two' name="Front_right" pkg="pid" type="controller" output="screen" >
       <param name="Kp" value="3" />
       <param name="Ki" value="1" />
       <param name="Kd" value="0" />
@@ -27,7 +27,7 @@
 
 
 
-  <node ns = 'three' name="left_wheel_pid" pkg="pid" type="controller" output="screen" >
+  <node ns = 'three' name="Back_right" pkg="pid" type="controller" output="screen" >
       <param name="Kp" value="3" />
       <param name="Ki" value="1" />
       <param name="Kd" value="0" />
@@ -39,7 +39,7 @@
       <param name="min_loop_frequency" value="95.0" />
      </node>
 
-  <node ns = 'four' name="left_wheel_pid" pkg="pid" type="controller" output="screen" >
+  <node ns = 'four' name="Back_left" pkg="pid" type="controller" output="screen" >
       <param name="Kp" value="3" />
       <param name="Ki" value="1" />
       <param name="Kd" value="0" />
@@ -51,15 +51,19 @@
       <param name="min_loop_frequency" value="95.0" />
      </node>
   
-<node ns = 'Port_0' pkg="rosserial_python" type="serial_node.py" name="serial_node" args="/dev/ttyACM0"/>
-<node ns = 'Port_1' pkg="rosserial_python" type="serial_node.py" name="serial_node" args="/dev/ttyACM1"/>
+<node  ns = 'Port_1' pkg="rosserial_python" type="serial_node.py" name="serial_node" args="/dev/ttyACM0"/>
+
 
 
 
  <node pkg="bog" type="dist_to_pid.py" name="flag" />
 <node pkg="bog" type="Wheel_linear_velocity.py" name="flagger" />
-<!--- pid_to_wheel.py   dist_to_pid.py-->
+
 <include file="$(find bog)/launch/MUX.launch"/>
+
+
+
+
 
 
 </launch>
