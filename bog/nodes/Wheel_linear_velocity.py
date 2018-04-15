@@ -102,34 +102,50 @@ class wheel_velocity:
 
     def reset(self,data):
         msg = Float64()
+        msga = Bool()
+        msga.data = True
+        msgb = Bool()
+        msgb.data = False
         msg.data = 0
 
-        rospy.set_param('one/Front_left', '0')
+        
         pub1 = rospy.Publisher('one/setpoint', Float64, queue_size=10)
+        pub1a = rospy.Publisher('one/pid_enable', Bool, queue_size=10)
+        pub1a.publish(msgb)
         pub1.publish(msg)
         self.wheel1_total = 0
-        rospy.set_param('one/Front_left', '1')
+        pub1a.publish(msga)
+        
         
 
-        rospy.set_param('two/Front_right', '0')
+        
         pub2 = rospy.Publisher('two/setpoint', Float64, queue_size=10)
+        pub2a = rospy.Publisher('two/pid_enable', Bool, queue_size=10)
+        pub2a.publish(msgb)
         pub2.publish(msg)
         self.wheel2_total = 0
-        rospy.set_param('two/Front_right', '1')
+        pub2a.publish(msga)
+        
         
 
-        rospy.set_param('three/Back_right', '0')
+        
         pub3 = rospy.Publisher('three/setpoint', Float64, queue_size=10)
+        pub3a = rospy.Publisher('three/pid_enable', Bool, queue_size=10)
+        pub3a.publish(msgb)
         pub3.publish(msg)
         self.wheel3_total = 0
-        rospy.set_param('three/Back_right', '1')
+        pub3a.publish(msga)
+        
         
 
-        rospy.set_param('four/Back_left', '0')
+        
         pub4 = rospy.Publisher('four/setpoint', Float64, queue_size=10)
+        pub4a = rospy.Publisher('four/pid_enable', Bool, queue_size=10)
+        pub4a.publish(msgb)
         pub4.publish(msg)
         self.wheel4_total = 0
-        rospy.set_param('four/Back_left', '1')
+        pub4a.publish(msga)
+        
         
 
 
