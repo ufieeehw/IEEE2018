@@ -36,6 +36,10 @@ def turnCCW(distance,goal):
         rospy.loginfo("difference: %s", currentDist)
         pub.publish(wheels)
         time.sleep(0.05)
+        
+    while (currentDist > DELAY_CONSTANT_FINE):
+        direction, currentDist = angleDirection(IMU.angle(),goal)
+        IMU.rotateToFine(direction,currentDist,goal)
 
     stop()
 
