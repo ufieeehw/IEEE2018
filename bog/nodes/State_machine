@@ -1,16 +1,45 @@
 #!/usr/bin/env python
-
 import rospy
-from chat_room.msg import SetWheelSpeeds
+import os
+import time
+from bog.msg import SetWheelSpeeds
 from std_msgs.msg import Int64
+from std_msgs.msg import Float64
+from std_msgs.msg import Float32
+from std_msgs.msg import Bool
+from topic_tools.srv import MuxSelect
 
 class Main:
 
 	def __init__(self):
-		rospy.init_node('State_Machine', anonymous=False)
-		rospy.Subscriber('IR', Int64, self.IR)
+
+		#topics needed to move the robot around 
+		self.Motor1 = rospy.Publisher('one/setpoint', Float64, queue_size=10)
+		self.Motor2 = rospy.Publisher('two/setpoint', Float64, queue_size=10)
+		self.Motor3 = rospy.Publisher('three/setpoint', Float64, queue_size=10)
+		self.Motor4 = rospy.Publisher('four/setpoint', Float64, queue_size=10)
+		self.Angle = rospy.Publisher('Goal_Angle', Float32, queue_size=10)
+		self.Reset = rospy.Publisher('Distance_Reset', Bool, queue_size=10)
+
+		#generating standard messages 
+		self.Motor_Distance = Float64()
+		self.Motor_Distance.data = 0
+
+		#used for the motor reset
+		self.bool_msg = Bool()
+		self.bool_msg.data = False
+
+		#MUX service 
+		rospy.wait_for_service('mux/select')
+		self.MUX = rospy.ServiceProxy('mux/select', MuxSelect)
+
+		#test
+		self.MUX('IMU_Motors')
 		self.state = True
 
+
+
+		#Moving into the main portion of the state machine
 		self.central()
 
 
@@ -23,26 +52,34 @@ class Main:
 		while(self.state):
 			pass
 
-		stepA = self.instruction/100
+		A = self.instruction/100
 
-		stepB = (self.instruction/10)%10
+		B = (self.instruction/10)%10
 
-		stepC = self.instruction%10
+		C = self.instruction%10
 
 		#first stage
 		if(A):
+
 			pass
 		else:
+
 			pass
 
+		#second stage
 		if(B):
+
 			pass
 		else:
+
 			pass
 
+		#third stage
 		if(C):
+
 			pass
 		else:
+
 			pass
 
 
