@@ -5,7 +5,7 @@ from bog.srv import *
 
 
 
-def rotate(angle):
+def to(angle):
     rospy.wait_for_service('rotate')
     try:
         rotateTo = rospy.ServiceProxy('rotate', Rotate)
