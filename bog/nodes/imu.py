@@ -170,6 +170,14 @@ def rotation_callback(data):
     IMU.setAngle(data.x)
     #rospy.loginfo("IMU: %s", data.x)
 
+def rotate_handle(goal):
+    direction, distance = angleDirection(IMU.angle(),goal)
+    rospy.loginfo("Goal: %s", goal)
+    rospy.loginfo("Direction: %s", direction)
+    rospy.loginfo("Distance: %s", distance)
+    IMU.rotateTo(direction,distance,data.data)
+
+
 def goal_callback(data):
     
     direction, distance = angleDirection(IMU.angle(),data.data)
@@ -181,9 +189,11 @@ def goal_callback(data):
 
 
 def listen():
-    rospy.init_node('vision_subscriber', anonymous=True)
+    rospy.init_node('IMU_Server', anonymous=True)
     rospy.Subscriber("Port_0/Imu_publisher", Vector3, rotation_callback)
-    rospy.Subscriber("Goal_Angle", Float32, goal_callback)
+    s = rospy.Service('rotate', Rotate, rotate_handle)
+    rospy.loginfo('ready to rotate')
+    #rospy.Subscriber("Goal_Angle", Float32, goal_callback)
 
     rospy.spin()
 
