@@ -5,6 +5,7 @@ from std_msgs.msg import String
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Vector3
 from bog.msg import SetWheelSpeeds
+from bog.srv import *
 
 DELAY_CONSTANT = 10 # stops the turning before the goal by a specified amount to account for delays
 DELAY_CONSTANT_FINE = 4
@@ -170,6 +171,14 @@ def rotation_callback(data):
     IMU.setAngle(data.x)
     #rospy.loginfo("IMU: %s", data.x)
 
+def rotate_handle(req):
+    direction, distance = angleDirection(IMU.angle(),req.angle)
+    rospy.loginfo("Goal: %s", req.angle)
+    rospy.loginfo("Direction: %s", direction)
+    rospy.loginfo("Distance: %s", distance)
+    IMU.rotateTo(direction,distance,req.angle)
+
+
 def goal_callback(data):
     
     direction, distance = angleDirection(IMU.angle(),data.data)
@@ -181,9 +190,11 @@ def goal_callback(data):
 
 
 def listen():
-    rospy.init_node('vision_subscriber', anonymous=True)
+    rospy.init_node('IMU_Server', anonymous=True)
     rospy.Subscriber("Port_0/Imu_publisher", Vector3, rotation_callback)
-    rospy.Subscriber("Goal_Angle", Float32, goal_callback)
+    s = rospy.Service('rotate', Rotate, rotate_handle)
+    rospy.loginfo('ready to rotate')
+    #rospy.Subscriber("Goal_Angle", Float32, goal_callback)
 
     rospy.spin()
 
