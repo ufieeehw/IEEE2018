@@ -11,7 +11,7 @@ DELAY_CONSTANT = 10 # stops the turning before the goal by a specified amount to
 DELAY_CONSTANT_FINE = 4
 WHEEL_SPEED = 90
 WHEEL_SPEED_FINE = 60
-TIMEOUT = 0.5
+TIMEOUT = 1
 
 wheels = SetWheelSpeeds()
 
@@ -39,8 +39,10 @@ def turnCCW(distance,goal):
         time.sleep(0.05)
         
     while (currentDist > DELAY_CONSTANT_FINE):
+        rospy.l
         direction, currentDist = angleDirection(IMU.angle(),goal)
         IMU.rotateToFine(direction,currentDist,goal)
+        time.sleep(0.1)
 
     stop()
 
@@ -66,8 +68,10 @@ def turnCW(distance,goal):
         time.sleep(0.05)
 
     while (currentDist > DELAY_CONSTANT_FINE):
+        rospy.loginfo("FINE TURNING")
         direction, currentDist = angleDirection(IMU.angle(),goal)
         IMU.rotateToFine(direction,currentDist,goal)
+        time.sleep(0.1)
 
     stop()
 
