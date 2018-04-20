@@ -1,8 +1,10 @@
 #include <Wire.h>
+#include <Servo.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
 #include <ros.h>
 #include <geometry_msgs/Vector3.h>
+#include <std_msgs/Int16.h>
 
  
 /* This driver reads raw data from the BNO055
@@ -22,12 +24,29 @@ geometry_msgs:: Vector3 vect; //Use Vector3 to hold the Euler X and Z data
 ros::Publisher pub("Imu_publisher", &vect); //Publish data to "Imu_publisher"
 
 Adafruit_BNO055 bno = Adafruit_BNO055();
+Servo servo1;
+Servo servo2;
+
+void servo_cb(const std_msgs::Int16& cmd_msg){
+  servo1.write(cmd_msg.data); //set servo angle, should be from 0-180  
+  servo2.write(cmd_msg.data);
+}
+
+ros::Subscriber<std_msgs::Int16> sub("servo", servo_cb);  //subscribe to the "servo" topic
 
 void setup(void){
  /* Set the delay between fresh samples. Wait for serial input to define sample rate. */
  #define BNO055_SAMPLERATE_DELAY_MS (100)
   //remove the above serial read after testing and timing diagram is established.
   Serial.begin(57600); //rosserial uses 57600 baud to connect
+
+  //Attach the servo's data pin to pin 9 and 10 on the Arduino
+  servo1.attach(9);
+  servo2.attach(10);
+
+  //Initializes both servos to 0 degrees
+  servo1.write(0); 
+  servo2.write(0);
   
   /* Initialise the sensor */
   if(!bno.begin())
@@ -58,6 +77,8 @@ void setup(void){
   bno.setExtCrystalUse(false);
 
   Serial.println("Calibration status values: 0=uncalibrated, 3=fully calibrated");
+  nh.initNode();
+  nh.subscribe(sub);
   nh.advertise(pub);
 }
 
@@ -66,7 +87,6 @@ void loop(){
   nh.spinOnce();
   delay(1);
 }
-
 
 String IMU_data()
 {
