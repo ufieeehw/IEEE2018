@@ -24,12 +24,10 @@ geometry_msgs:: Vector3 vect; //Use Vector3 to hold the Euler X and Z data
 ros::Publisher pub("Imu_publisher", &vect); //Publish data to "Imu_publisher"
 
 Adafruit_BNO055 bno = Adafruit_BNO055();
-Servo servo1;
-Servo servo2;
+Servo servo;
 
 void servo_cb(const std_msgs::Int16& cmd_msg){
-  servo1.write(cmd_msg.data); //set servo angle, should be from 0-180  
-  servo2.write(cmd_msg.data);
+  servo.write(cmd_msg.data); //set servo angle, should be from 0-180  
 }
 
 ros::Subscriber<std_msgs::Int16> sub("servo", servo_cb);  //subscribe to the "servo" topic
@@ -40,13 +38,11 @@ void setup(void){
   //remove the above serial read after testing and timing diagram is established.
   Serial.begin(57600); //rosserial uses 57600 baud to connect
 
-  //Attach the servo's data pin to pin 9 and 10 on the Arduino
-  servo1.attach(9);
-  servo2.attach(10);
+  //Attach the servo's data line to pin 9 on the Arduino
+  servo.attach(9);
 
-  //Initializes both servos to 0 degrees
-  servo1.write(0); 
-  servo2.write(0);
+  //Initializes both servos to 180 degrees
+  servo.write(180); 
   
   /* Initialise the sensor */
   if(!bno.begin())
