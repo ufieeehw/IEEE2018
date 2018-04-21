@@ -7,7 +7,7 @@ from geometry_msgs.msg import Vector3
 from bog.msg import SetWheelSpeeds
 from bog.srv import *
 
-DELAY_CONSTANT = 30 # stops the turning before the goal by a specified amount to account for delays
+DELAY_CONSTANT = 60 # stops the turning before the goal by a specified amount to account for delays
 DELAY_CONSTANT_FINE = 3
 WHEEL_SPEED = 100
 WHEEL_SPEED_FINE = 100
