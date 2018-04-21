@@ -9,7 +9,7 @@ from bog.msg import SetWheelSpeeds
 DISTANCE_RATIO = 0.25 #this constant will be used to determine how much to move the robot left or right. The farther away we are, the less we want to move left or right. 
 GOAL_DISTANCE_LOW = 5 # the lower bound of the goal distance from the button
 GOAL_DISTANCE_HIGH = 11 # the upper bound of the goal distance from the button
-WHEEL_SPEED = 120
+WHEEL_SPEED = 60
 TIMEOUT = 0.5
 
 

@@ -7,17 +7,13 @@ from geometry_msgs.msg import Vector3
 from bog.msg import SetWheelSpeeds
 from bog.srv import *
 
-DELAY_CONSTANT = 10 # stops the turning before the goal by a specified amount to account for delays
-DELAY_CONSTANT_FINE = 4
-WHEEL_SPEED = 90
-WHEEL_SPEED_FINE = 60
-TIMEOUT = 0.5
+DELAY_CONSTANT = 30 # stops the turning before the goal by a specified amount to account for delays
+DELAY_CONSTANT_FINE = 3
+WHEEL_SPEED = 100
+WHEEL_SPEED_FINE = 100
+TIMEOUT = 0.1
 
 wheels = SetWheelSpeeds()
-
-
-
-
 
 def turnCCW(distance,goal):
     global IMU
@@ -32,15 +28,22 @@ def turnCCW(distance,goal):
 
     garb, currentDist = angleDirection(goal, IMU.angle())
     while(currentDist > DELAY_CONSTANT):
-        garb, currentDist = angleDirection(goal, IMU.angle())
+        
         rospy.loginfo("rotating CCW. currently at angle %s", IMU.angle())
         rospy.loginfo("difference: %s", currentDist)
         pub.publish(wheels)
-        time.sleep(0.05)
-        
+        time.sleep(0.5)
+        garb, currentDist = angleDirection(goal, IMU.angle())
+
+
+    direction, currentDist = angleDirection(goal, IMU.angle())           
     while (currentDist > DELAY_CONSTANT_FINE):
-        direction, currentDist = angleDirection(IMU.angle(),goal)
+        
+        rospy.loginfo("FINE TUNING")
+        direction, currentDist = angleDirection(goal,IMU.angle())
         IMU.rotateToFine(direction,currentDist,goal)
+        time.sleep(TIMEOUT)
+        direction, currentDist = angleDirection(goal, IMU.angle()) 
 
     stop()
 
@@ -63,25 +66,26 @@ def turnCW(distance,goal):
         rospy.loginfo("rotating CW. currently at angle %s", IMU.angle())
         rospy.loginfo("difference: %s", currentDist)
         pub.publish(wheels)
-        time.sleep(0.05)
+        time.sleep(0.5)
 
+    direction, currentDist = angleDirection(goal, IMU.angle())    
     while (currentDist > DELAY_CONSTANT_FINE):
-        direction, currentDist = angleDirection(IMU.angle(),goal)
+        rospy.loginfo("FINE TURNING")
         IMU.rotateToFine(direction,currentDist,goal)
+        time.sleep(TIMEOUT)
+        direction, currentDist = angleDirection(goal,IMU.angle())
 
     stop()
 
 
 def turnCWFine(distance,goal):
-
-
     pub = rospy.Publisher('IMU_Motors', SetWheelSpeeds, queue_size=1)
     wheels.wheel1 = 1 * WHEEL_SPEED_FINE
     wheels.wheel2 = -1 * WHEEL_SPEED_FINE
     wheels.wheel3 = -1 * WHEEL_SPEED_FINE
     wheels.wheel4 =  1 * WHEEL_SPEED_FINE
     pub.publish(wheels)
-    time.sleep(0.3)
+    time.sleep(TIMEOUT)
     stop()    
     time.sleep(1)
 
@@ -92,7 +96,7 @@ def turnCCWFine(distance,goal):
     wheels.wheel3 = 1 * WHEEL_SPEED_FINE
     wheels.wheel4 = -1 * WHEEL_SPEED_FINE
     pub.publish(wheels)
-    time.sleep(0.3)
+    time.sleep(TIMEOUT)
     stop()    
     time.sleep(1)
 
@@ -131,9 +135,9 @@ class IMU:
 
     def rotateToFine(self,direction,distance,goal):
         if direction == "CW":
-            turnCWFine(distance,goal)
-        elif direction == "CCW":
             turnCCWFine(distance,goal)
+        elif direction == "CCW":
+            turnCWFine(distance,goal)
 
 
         
