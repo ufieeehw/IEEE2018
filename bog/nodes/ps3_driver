@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+
+
+import rospy
+from chat_room.msg import SetWheelSpeeds
+from sensor_msgs.msg import Joy 
+
+def callback(data):
+    hombre = SetWheelSpeeds()
+    hombre.wheel1 = int(50*data.axes[1]- 50*data.axes[0])
+    hombre.wheel4 = int(50*data.axes[1]+ 50*data.axes[0])
+    hombre.wheel2 = int(50*data.axes[3]- 50*data.axes[2])
+    hombre.wheel3 = int(50*data.axes[3]+ 50*data.axes[2])
+    pub.publish(hombre)
+    #rate.sleep()
+
+
+
+def talker():
+    global pub
+    pub = rospy.Publisher('Set_Motors', SetWheelSpeeds, queue_size=10)
+    rospy.init_node('ps3_to_wheels', anonymous=True)
+    rospy.Subscriber('joy', Joy, callback)
+    rate = rospy.Rate(10) # 10hz
+    rospy.spin()
+
+
+
+if __name__ == '__main__':
+	talker()
+
+
